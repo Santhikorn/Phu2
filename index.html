@@ -4,147 +4,121 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>วัดอุณหภูมิและความชื้นสัมพัทธ์ในอากาศ</title>
+  <!-- Google Fonts: Prompt & Kanit -->
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&family=Prompt:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Prompt', 'Segoe UI', Arial, sans-serif;
+      font-family: 'Prompt', 'Kanit', 'Segoe UI', Arial, sans-serif;
       margin: 0;
       padding: 0;
       min-height: 100vh;
-      background: #e0f2fe url('https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1200&q=80') center center/cover no-repeat fixed;
+      background: linear-gradient(120deg, #e0f2fe 0%, #bae6fd 100%);
+      background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
       display: flex;
       align-items: flex-start;
       justify-content: center;
+      animation: bgfade 2s;
+    }
+    @keyframes bgfade {
+      from { filter: blur(8px) brightness(0.8);}
+      to { filter: blur(0) brightness(1);}
     }
     .weather-container {
-      background: rgba(255,255,255,0.98);
-      border-radius: 24px;
-      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.13);
-      padding: 20px 8px 16px 8px;
+      background: rgba(255,255,255,0.92);
+      border-radius: 28px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+      padding: 32px 18px 24px 18px;
       min-width: 320px;
       max-width: 650px;
       width: 100%;
       text-align: center;
-      margin: 32px 0;
+      margin: 48px 0;
       position: relative;
       overflow: hidden;
-      border: 2px solid #bae6fd;
+      border: 2.5px solid #38bdf8;
       animation: fadein 1.2s;
+      backdrop-filter: blur(2.5px);
     }
     @keyframes fadein {
       from { opacity: 0; transform: translateY(30px);}
       to { opacity: 1; transform: translateY(0);}
     }
-    .weather-container::before,
-    .weather-container::after {
-      display: none;
-    }
     h1 {
-      color: #222;
-      margin-bottom: 18px;
-      font-size: 2em;
+      color: #2563eb; /* เปลี่ยนเป็นสีน้ำเงิน */
+      margin-bottom: 20px;
+      font-size: 2.4em;
       font-weight: 900;
-      letter-spacing: 1.5px;
+      letter-spacing: 2px;
+      font-family: 'Kanit', 'Prompt', Arial, sans-serif;
       z-index: 1;
       position: relative;
-      text-shadow: 0 2px 16px #bae6fd44, 0 1px 0 #fff;
-      background: none;
-      -webkit-background-clip: unset;
-      -webkit-text-fill-color: unset;
+      text-shadow: 0 4px 24px #bae6fd66, 0 1px 0 #fff;
+      /* ลบ background-gradient ออก */
+      /* -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text; */
     }
     .desc {
       color: #334155;
-      font-size: 1.05em;
-      margin-bottom: 18px;
-      line-height: 1.7;
-      background: #f0f9ff;
-      border-radius: 14px;
-      padding: 12px 10px;
-      box-shadow: 0 1px 8px #bae6fd22;
+      font-size: 1.13em;
+      margin-bottom: 22px;
+      line-height: 1.85;
+      background: #f0f9ffcc;
+      border-radius: 18px;
+      padding: 18px 16px;
+      box-shadow: 0 2px 12px #bae6fd33;
       display: inline-block;
       text-align: left;
-      max-width: 480px;
+      max-width: 520px;
       z-index: 1;
       position: relative;
+      font-family: 'Prompt', 'Kanit', Arial, sans-serif;
+      border-left: 6px solid #38bdf8;
+      border-right: 6px solid #2563eb22;
     }
-    .weather-icon {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-      animation: bounce 1.2s infinite alternate;
-      z-index: 1;
-      position: relative;
-    }
-    @keyframes bounce {
-      0% { transform: translateY(0);}
-      100% { transform: translateY(-10px);}
-    }
-    .label {
+    .desc b {
       color: #2563eb;
-      font-size: 1em;
-      margin-top: 10px;
-      margin-bottom: 2px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      z-index: 1;
-      position: relative;
-    }
-    .value {
-      font-size: 1.7em;
-      font-weight: 900;
-      color: #0ea5e9;
-      margin-bottom: 8px;
-      z-index: 1;
-      position: relative;
-      text-shadow: 0 2px 12px #bae6fd44;
-    }
-    .refresh-btn {
-      margin-top: 14px;
-      padding: 10px 22px;
-      font-size: 1em;
-      border-radius: 12px;
-      border: none;
-      background: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%);
-      color: #fff;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 2px 12px #bae6fd55;
-      transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
-      letter-spacing: 1px;
-      z-index: 1;
-      position: relative;
-    }
-    .refresh-btn:hover {
-      background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
-      box-shadow: 0 4px 22px #bae6fd33;
-      transform: scale(1.04);
+      font-weight: 700;
+      font-family: 'Kanit', 'Prompt', Arial, sans-serif;
     }
     .radar-section {
-      margin: 24px 0 0 0;
+      margin: 32px 0 0 0;
       text-align: center;
       z-index: 1;
       position: relative;
     }
     .radar-title {
       color: #2563eb;
-      font-size: 1.08em;
+      font-size: 1.18em;
       font-weight: 700;
-      margin-bottom: 10px;
-      letter-spacing: 0.5px;
+      margin-bottom: 14px;
+      letter-spacing: 0.7px;
+      font-family: 'Kanit', 'Prompt', Arial, sans-serif;
+      text-shadow: 0 2px 12px #bae6fd33;
     }
     .radar-iframe {
       width: 100%;
       max-width: 600px;
       height: 400px;
       border: none;
-      border-radius: 16px;
-      box-shadow: 0 2px 16px #bae6fd33;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px #bae6fd44;
       margin: 0 auto;
       display: block;
       background: #e0f2fe;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .radar-iframe:hover {
+      box-shadow: 0 8px 32px #38bdf888;
+      transform: scale(1.01);
     }
     @media (max-width: 700px) {
       .weather-container {
         max-width: 100vw;
-        padding: 8px 0 8px 0;
+        padding: 12px 0 12px 0;
       }
       .radar-iframe {
         height: 220px;
@@ -153,23 +127,46 @@
     }
     @media (max-width: 600px) {
       .weather-container {
-        padding: 4px 0 4px 0;
+        padding: 6px 0 6px 0;
       }
       h1 {
-        font-size: 1.1em;
+        font-size: 1.2em;
       }
       .desc {
-        padding: 6px 2px;
-        font-size: 0.95em;
+        padding: 8px 4px;
+        font-size: 1em;
       }
       .radar-iframe {
         height: 140px;
       }
     }
+    /* เพิ่มลูกเล่นฟองอากาศ */
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.18;
+      background: linear-gradient(120deg, #38bdf8 60%, #2563eb 100%);
+      animation: floatbubble 8s infinite ease-in-out;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .bubble.b1 { width: 80px; height: 80px; left: 5%; top: 10%; animation-delay: 0s;}
+    .bubble.b2 { width: 50px; height: 50px; right: 8%; top: 22%; animation-delay: 2s;}
+    .bubble.b3 { width: 100px; height: 100px; left: 15%; bottom: 8%; animation-delay: 4s;}
+    .bubble.b4 { width: 60px; height: 60px; right: 12%; bottom: 16%; animation-delay: 1s;}
+    @keyframes floatbubble {
+      0% { transform: translateY(0) scale(1);}
+      50% { transform: translateY(-30px) scale(1.08);}
+      100% { transform: translateY(0) scale(1);}
+    }
   </style>
 </head>
 <body>
   <div class="weather-container">
+    <span class="bubble b1"></span>
+    <span class="bubble b2"></span>
+    <span class="bubble b3"></span>
+    <span class="bubble b4"></span>
     <h1>วัดอุณหภูมิและความชื้นสัมพัทธ์ในอากาศ</h1>
     <div class="desc">
       เว็บไซต์นี้แสดงข้อมูล <b>อุณหภูมิ</b> และ <b>ความชื้นสัมพัทธ์</b> ในอากาศ<br>
@@ -191,12 +188,6 @@
         <a href="https://www.windy.com/th/-%E0%B9%80%E0%B8%A3%E0%B8%94%E0%B8%B2%E0%B8%A3%E0%B9%8C%E0%B8%AA%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%AD%E0%B8%B2%E0%B8%81%E0%B8%B2%E0%B8%A8-radar?radar,13.443,104.150,6,m:d2AaiW1" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:underline;">Windy.com</a>
       </span>
     </div>
-    <div class="weather-icon">🌤️</div>
-    <div class="label">อุณหภูมิ</div>
-    <div class="value" id="temp-value">-- °C</div>
-    <div class="label">ความชื้นสัมพัทธ์</div>
-    <div class="value" id="humidity-value">-- %</div>
-    <button class="refresh-btn" onclick="fetchWeather()">รีเฟรชข้อมูล</button>
     <div class="radar-section">
       <div class="radar-title">เรดาร์สภาพอากาศ (Windy.com)</div>
       <iframe class="radar-iframe"
@@ -211,35 +202,5 @@
       </div>
     </div>
   </div>
-  <script>
-    // ตัวอย่าง mock ข้อมูล (สามารถเชื่อม API จริงได้)
-    function fetchWeather() {
-      // ตัวอย่างสุ่มข้อมูล
-      const temp = (Math.random() * 10 + 25).toFixed(1); // 25-35°C
-      const humidity = (Math.random() * 40 + 40).toFixed(0); // 40-80%
-      document.getElementById('temp-value').textContent = `${temp} °C`;
-      document.getElementById('humidity-value').textContent = `${humidity} %`;
-    }
-    fetchWeather();
-  </script>
-</body>
-</html>
-      </iframe>
-      <div style="margin-top:8px; color:#5b21b6; font-size:0.98em;">
-        ข้อมูลเรดาร์จาก <a href="https://www.windy.com/th/-%E0%B9%80%E0%B8%A3%E0%B8%94%E0%B8%B2%E0%B8%A3%E0%B9%8C%E0%B8%AA%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%AD%E0%B8%B2%E0%B8%81%E0%B8%B2%E0%B8%A8-radar?radar,13.443,104.150,6,m:d2AaiW1" target="_blank" rel="noopener" style="color:#4f46e5;text-decoration:underline;">Windy.com</a>
-      </div>
-    </div>
-  </div>
-  <script>
-    // ตัวอย่าง mock ข้อมูล (สามารถเชื่อม API จริงได้)
-    function fetchWeather() {
-      // ตัวอย่างสุ่มข้อมูล
-      const temp = (Math.random() * 10 + 25).toFixed(1); // 25-35°C
-      const humidity = (Math.random() * 40 + 40).toFixed(0); // 40-80%
-      document.getElementById('temp-value').textContent = `${temp} °C`;
-      document.getElementById('humidity-value').textContent = `${humidity} %`;
-    }
-    fetchWeather();
-  </script>
 </body>
 </html>
